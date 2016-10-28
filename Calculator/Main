@@ -1,0 +1,22 @@
+import operator
+import functools
+
+# create a dictionary for the operators
+operator_map = {"+": operator.add, "-": operator.sub, "*": operator.mul, "/": operator.truediv, "pow": operator.pow}
+
+
+def main():
+    amount_of_numbers = int(input("How many numbers do you require: "))
+
+    try:
+        numbers = [int(input("Number: ")) for _ in range(amount_of_numbers)]
+    except ValueError:
+        print("That is not a number!!")
+
+    choice = input("Enter an operator( valid operators include: +, -, *, / and pow): ")
+
+    print(functools.reduce(operator_map[choice], numbers) if choice in operator_map else "Invalid Operator Input!!")
+
+if __name__ == '__main__':
+    main()
+
