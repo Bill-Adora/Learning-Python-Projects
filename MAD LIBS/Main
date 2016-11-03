@@ -1,0 +1,45 @@
+def getKeys(formatString):
+    keyList = list()
+    end = 0
+    repetitions = formatString.count('{')
+    for i in range(repetitions):
+        start = formatString.find('{', end) + 1
+        end = formatString.find('}', start)
+        key = formatString[start:end]
+        keyList.append(key)
+
+    return set(keyList)
+
+
+def addPicks(cue, dictionary):
+    promptFormat = "Enter a specific example for {name}:"
+    prompt = promptFormat.format(name=cue)
+    response = input(prompt)
+    dictionary[cue] = response
+
+
+def getUserPicks(cues):
+    userPicks = dict()
+
+    for cue in cues:
+        addPicks(cue, userPicks)
+
+    return userPicks
+
+
+def tellStory(storyFormat):
+    output = open("output.txt", "w")
+    cues = getKeys(storyFormat)
+    userPicks = getUserPicks(cues)
+    story = storyFormat.format(**userPicks)
+    print(story)
+    output.write(story)
+
+
+def main():
+    storyFile = open("50_shades.txt")
+    instory = storyFile.read()
+
+    tellStory(instory)
+
+main()
